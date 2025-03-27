@@ -3,7 +3,7 @@ import HeroSection from "./components/Hero.jsx";
 import "./index.css";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
-import Education from "./components/education.jsx";
+import Education from "./components/Education.jsx";
 import Skill from "./components/Skill.jsx";
 import Experience from "./components/Experience.jsx";
 import Project from "./components/Project.jsx";

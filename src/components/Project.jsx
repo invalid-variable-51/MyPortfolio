@@ -47,21 +47,35 @@ const projects = [
   },
 ];
 
-// Framer Motion variants for slide animation
+// Framer Motion variants for left/right slide animation
 const slideVariants = {
-  initial: { x: 100, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  exit: { x: -100, opacity: 0 },
+  initial: (direction) => ({
+    x: direction > 0 ? 100 : -100,
+    opacity: 0,
+  }),
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.6, ease: 'easeInOut' },
+  },
+  exit: (direction) => ({
+    x: direction > 0 ? -100 : 100,
+    opacity: 0,
+    transition: { duration: 0.6, ease: 'easeInOut' },
+  }),
 };
 
 const Projects = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   const nextProject = () => {
+    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % projects.length);
   };
 
   const prevProject = () => {
+    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
   };
 
@@ -72,16 +86,16 @@ const Projects = () => {
           My Projects
         </h2>
 
-        <div className="relative w-full max-w-5xl">
+        <div className="relative w-full max-w-5xl min-h-[400px]">
           {/* AnimatePresence handles exit transitions for the outgoing card */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={projects[currentIndex].title}
               variants={slideVariants}
               initial="initial"
               animate="animate"
               exit="exit"
-              transition={{ duration: 0.6 }}
+              custom={direction}
               className="bg-white rounded-xl shadow-xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 hover:shadow-2xl transition-shadow duration-300"
               whileHover={{ scale: 1.01 }}
             >
@@ -117,17 +131,33 @@ const Projects = () => {
             </motion.div>
           </AnimatePresence>
 
+          {/* Pagination Dots */}
+          <div className="flex justify-center items-center mt-6">
+            {projects.map((_, index) => (
+              <div
+                key={index}
+                onClick={() => {
+                  setDirection(index > currentIndex ? 1 : -1);
+                  setCurrentIndex(index);
+                }}
+                className={`h-2 w-2 mx-2 rounded-full ${
+                  index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                } cursor-pointer`}
+              />
+            ))}
+          </div>
+
           {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
             <button
               onClick={prevProject}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+              className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300`}
             >
               Previous
             </button>
             <button
               onClick={nextProject}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+              className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300`}
             >
               Next
             </button>

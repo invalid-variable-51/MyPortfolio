@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
-import awsLogo from '../assets/awslogo.png';
 import { Element } from 'react-scroll';
+import { motion } from 'framer-motion';
+import awsLogo from '../assets/awslogo.png';
 
 const initialSkills = [
   { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
@@ -38,22 +39,35 @@ const Skills = () => {
   return (
     <Element name="Skills">
       <section className="w-full min-h-screen flex flex-col items-center justify-start py-20 px-4 bg-gray-100">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">My Skills</h2>
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold text-gray-800 mb-12"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.05, textShadow: "0px 0px 8px rgba(0, 0, 0, 0.5)" }}
+        >
+          My Skills
+        </motion.h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center max-w-6xl w-full">
           {shuffledSkills.map(({ name, logo }, idx) => (
-            <figure
+            <motion.figure
               key={idx}
-              className="flex flex-col items-center justify-center transition-transform duration-300 hover:scale-105"
+              className="flex flex-col items-center justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.1 }}
+              viewport={{ once: true }}
+              transition={{  duration: 0.5 }}
             >
               <img
                 src={logo}
                 alt={name}
                 className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 object-contain"
               />
-              <figcaption className="mt-2 text-center text-gray-800 font-medium text-xs sm:text-sm transition-colors duration-300 hover:text-blue-600">
+              <figcaption className="mt-2 text-center text-gray-800 font-medium text-xs sm:text-sm transition-colors duration-75 hover:text-blue-600">
                 {name}
               </figcaption>
-            </figure>
+            </motion.figure>
           ))}
         </div>
       </section>

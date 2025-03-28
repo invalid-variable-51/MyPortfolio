@@ -24,7 +24,7 @@ const Contact = () => {
           <div className="flex flex-col sm:flex-row gap-6 mb-20">
             <motion.a
               whileHover={{ scale: 1.05 }}
-              href="mailto:someone@example.com"
+              href="mailto:viditmehtaqwe@gmail.com"
               className="bg-blue-500 text-white text-base sm:text-lg md:text-xl px-8 py-4 rounded-full font-semibold hover:bg-blue-600 transition-all duration-300 shadow-lg text-center"
             >
               Email Me

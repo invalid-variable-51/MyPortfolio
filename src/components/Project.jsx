@@ -4,7 +4,7 @@ import { Element } from 'react-scroll';
 
 // Example screenshots from your assets folder
 import preppalImg from '../assets/preppal.png';
-import musicgenImg from '../assets/teenpay.png';
+import musicgenImg from '../assets/automusic.png';
 import teenpayImg from '../assets/teenpay.png';
 
 // Each project’s data
